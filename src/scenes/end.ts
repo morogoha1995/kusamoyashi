@@ -1,10 +1,10 @@
-import { createTweet } from "../utils"
+import { createTweet } from '../utils'
 
 export class End extends Phaser.Scene {
   private wave = 0
 
   constructor() {
-    super({ key: "end" })
+    super({ key: 'end' })
   }
 
   init() { }
@@ -19,6 +19,6 @@ export class End extends Phaser.Scene {
 
     const tweetURL = createTweet(text, url, '草燃やし')
 
-    window.open(tweetURL, "blank")
+    window.open(tweetURL, 'blank')
   }
 }
