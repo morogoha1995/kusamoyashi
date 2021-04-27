@@ -4,7 +4,7 @@
   "description": "Developing....",
   "main": "main.ts",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack serve",
     "build": "webpack --mode production"
   },
   "author": "moro",

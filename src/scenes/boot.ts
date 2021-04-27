@@ -1,13 +1,14 @@
-import { TILE_SIZE } from "../constants"
-
 export class Boot extends Phaser.Scene {
   constructor() {
-    super({ key: "boot" })
+    super({ key: 'boot' })
   }
 
-  preload() { }
+  preload() {
+    this.load
+      .image('bg', 'assets/imgs/bg.jpg')
+  }
 
   create() {
-    this.scene.start("game")
+    this.scene.start('game')
   }
 }

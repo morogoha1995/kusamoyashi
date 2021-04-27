@@ -1,5 +1,8 @@
-import Phaser from "phaser"
-import { WIDTH, HEIGHT } from "./constants"
+import Phaser from 'phaser'
+import { WIDTH, HEIGHT } from './constants'
+import { Boot } from './scenes/boot'
+import { Game } from './scenes/game'
+import { End } from './scenes/end'
 
 window.onload = () => {
   new Phaser.Game({
@@ -8,17 +11,16 @@ window.onload = () => {
     width: WIDTH,
     height: HEIGHT,
     physics: {
-      default: "arcade",
+      default: 'arcade',
       arcade: {
         debug: false,
       }
     },
-    scale: {
-      mode: Phaser.Scale.FIT,
-      autoCenter: Phaser.Scale.CENTER_BOTH
-    },
-    backgroundColor: "#4DB6AC",
+    backgroundColor: '#fdf6e3',
     scene: [
+      Boot,
+      Game,
+      End
     ]
   })
 }

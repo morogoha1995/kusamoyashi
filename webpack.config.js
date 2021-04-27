@@ -24,10 +24,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html"
     }),
-    new CopyWebpackPlugin([{
-      from: path.resolve(__dirname, './assets'),
-      to: path.resolve(__dirname, 'dist/assets')
-    }])
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, './assets'),
+          to: path.resolve(__dirname, 'dist/assets')
+        }
+      ]
+    })
   ],
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
