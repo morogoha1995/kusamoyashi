@@ -8,6 +8,7 @@ export class Boot extends Phaser.Scene {
 
     this.load
       .image('bg', `${dir}bg.jpg`)
+      .image('grass', `${dir}grass.png`)
       .spritesheet('fire', `${dir}fire-spritesheet.png`, {
         frameWidth: 30, frameHeight: 30, startFrame: 0
       })

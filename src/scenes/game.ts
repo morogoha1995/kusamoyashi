@@ -1,5 +1,6 @@
 export class Game extends Phaser.Scene {
   private fire!: Phaser.GameObjects.Sprite
+  private grasses!: Phaser.GameObjects.Group
 
   constructor() {
     super({ key: 'game' })
@@ -19,6 +20,8 @@ export class Game extends Phaser.Scene {
       .sprite(0, 0, 'fire')
       .play('firing')
       .setScale(2)
+
+    this.grasses = this.add.group()
   }
 
   update() {
