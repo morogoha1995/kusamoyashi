@@ -24,7 +24,7 @@ export class Game extends Phaser.Scene {
   }
 
   update() {
-    const isClick = this.input.mousePointer.isDown
+    const isClick = this.input.activePointer.isDown
     this.fire.update(isClick, this.getPointerPos())
   }
 
