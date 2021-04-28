@@ -1,4 +1,4 @@
-import { WIDTH, HEIGHT, FONT_SIZE } from "./constants"
+import { FONT_SIZE } from "./constants"
 
 export const createFontStyle = (color: string, fontSizeRatio = 1, isStroke = true) => {
   const fontStyle: any = {
