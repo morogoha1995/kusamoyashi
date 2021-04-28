@@ -23,23 +23,13 @@ export class Fire extends Phaser.GameObjects.Sprite {
   }
 
   update(isClick: boolean, pos: { x: number, y: number }) {
-    const isAttack = isClick && this.fuel.isRemain && !this.fuel.isExhaust
+    const isAttack = isClick && !this.fuel.isExhaust
 
     this.setVisible(isAttack)
 
-    if (isAttack) {
-      this.attack()
+    this.fuel.update(isAttack)
+
+    if (isAttack)
       this.setPosition(pos.x, pos.y)
-    } else {
-      this.wait()
-    }
-  }
-
-  private wait() {
-    this.fuel.charge()
-  }
-
-  private attack() {
-    this.fuel.use()
   }
 }
