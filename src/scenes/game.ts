@@ -1,5 +1,7 @@
+import { Fire } from "../objects/fire"
+
 export class Game extends Phaser.Scene {
-  private fire!: Phaser.GameObjects.Sprite
+  private fire!: Fire
   private grasses!: Phaser.GameObjects.Group
 
   constructor() {
@@ -16,27 +18,14 @@ export class Game extends Phaser.Scene {
       repeat: -1
     })
 
-    this.fire = this.add
-      .sprite(0, 0, 'fire')
-      .play('firing')
-      .setScale(2)
+    this.fire = new Fire(this)
 
     this.grasses = this.add.group()
   }
 
   update() {
     const isClick = this.input.mousePointer.isDown
-    this.fire.setVisible(isClick)
-
-    this.fireMove()
-  }
-
-  private fireMove() {
-    if (!this.fire.visible)
-      return
-
-    const p = this.getPointerPos()
-    this.fire.setPosition(p.x, p.y)
+    this.fire.update(isClick, this.getPointerPos())
   }
 
   private getPointerPos() {
