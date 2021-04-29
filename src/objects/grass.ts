@@ -7,7 +7,9 @@ export class Grass extends Phaser.GameObjects.Sprite {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'grass')
 
-    this.setDepth(1)
+    this
+      .setScale(0.8)
+      .setDepth(1)
   }
 
   attacked() {
@@ -32,7 +34,7 @@ export class Grass extends Phaser.GameObjects.Sprite {
       targets: this,
       duration: 40,
       alpha: 0.6,
-      scale: 0.8,
+      scale: 0.6,
       yoyo: true,
       onComplete: () => this.isHitting = false
     })

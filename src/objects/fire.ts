@@ -2,7 +2,6 @@ import { Fuel } from "./fuel"
 
 export class Fire extends Phaser.Physics.Arcade.Sprite {
   private fuel: Fuel
-  isAttack = false
 
   constructor(scene: Phaser.Scene) {
     super(scene, 0, 0, 'fire')
@@ -21,13 +20,12 @@ export class Fire extends Phaser.Physics.Arcade.Sprite {
 
     this.play('firing')
       .setVisible(false)
-      .setScale(2.5)
+      .setScale(2)
       .setDepth(2)
   }
 
   update(isClick: boolean, pos: { x: number, y: number }) {
     const isAttack = isClick && this.fuel.canFire
-    this.isAttack = isClick
 
     this.setVisible(isAttack)
 

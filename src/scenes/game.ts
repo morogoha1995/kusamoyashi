@@ -1,10 +1,12 @@
-import { HEIGHT, OVERALL_HEIGHT, SCORE_HEIGHT, WIDTH } from "../constants"
+import { OVERALL_HEIGHT, SCORE_HEIGHT, WIDTH } from "../constants"
 import { Fire } from "../objects/fire"
 import { Grass } from "../objects/grass"
 
 export class Game extends Phaser.Scene {
   private grasses!: Phaser.Physics.Arcade.Group
   private fire!: Fire
+
+  private isClick = false
   private createInterval = 500
   private addInterval = 2000
 
@@ -14,26 +16,25 @@ export class Game extends Phaser.Scene {
 
   create() {
     this.add
-    .image(0, 0, 'bg')
-    .setOrigin(0, 0)
-    .setScale(1.5)
+      .image(0, 0, 'bg')
+      .setOrigin(0, 0)
+      .setScale(1.5)
 
     this.grasses = this.physics.add.group()
 
     this.fire = new Fire(this)
 
-    this.physics.add.collider(this.fire, this.grasses, (f: any, g: any) => {
-      if (!f.isAttack)
+    this.physics.add.collider(this.fire, this.grasses, (_, g: any) => {
+      if (!this.isClick)
         return
 
-      console.log('aaa')
       g.attacked()
     })
   }
 
   update(time: number) {
-    const isClick = this.input.activePointer.isDown
-    this.fire.update(isClick, this.getPointerPos())
+    this.isClick = this.input.activePointer.isDown
+    this.fire.update(this.isClick, this.getPointerPos())
 
     if (this.createInterval <= time)
       this.createGrass()
@@ -45,7 +46,10 @@ export class Game extends Phaser.Scene {
       grass = new Grass(this, x, y)
 
     this.grasses.add(grass, true)
+    this.calcInterval()
+  }
 
+  private calcInterval() {
     this.createInterval += this.addInterval
     if (this.addInterval > 1000)
       this.addInterval -= 50
