@@ -6,7 +6,6 @@ export class Game extends Phaser.Scene {
   private grasses!: Phaser.Physics.Arcade.Group
   private fire!: Fire
 
-  private isClick = false
   private createInterval = 500
   private addInterval = 2000
 
@@ -24,17 +23,15 @@ export class Game extends Phaser.Scene {
 
     this.fire = new Fire(this)
 
-    this.physics.add.collider(this.fire, this.grasses, (_, g: any) => {
-      if (!this.isClick)
-        return
-
-      g.attacked()
+    this.physics.add.collider(this.fire, this.grasses, (f: any, g: any) => {
+      if (f.isAttack)
+        g.attacked()
     })
   }
 
   update(time: number) {
-    this.isClick = this.input.activePointer.isDown
-    this.fire.update(this.isClick, this.getPointerPos())
+    const isClick = this.input.activePointer.isDown
+    this.fire.update(isClick, this.getPointerPos())
 
     if (this.createInterval <= time)
       this.createGrass()
