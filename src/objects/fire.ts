@@ -5,6 +5,7 @@ export class Fire extends Phaser.GameObjects.Sprite {
 
   constructor(scene: Phaser.Scene) {
     super(scene, 0, 0, 'fire')
+    scene.add.existing(this)
 
     this.fuel = new Fuel(scene)
 
@@ -18,12 +19,11 @@ export class Fire extends Phaser.GameObjects.Sprite {
     this.play('firing')
       .setVisible(false)
       .setScale(2)
-
-    scene.add.existing(this)
+      .setDepth(2)
   }
 
   update(isClick: boolean, pos: { x: number, y: number }) {
-    const isAttack = isClick && !this.fuel.isExhaust
+    const isAttack = isClick && this.fuel.canFire
 
     this.setVisible(isAttack)
 
