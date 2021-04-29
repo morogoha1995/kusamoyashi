@@ -11,8 +11,13 @@ export class Fuel {
   private textTween: Phaser.Tweens.Tween
 
   constructor(scene: Phaser.Scene) {
+    const barWidth = 200,
+      barHeight = 30,
+      boxWidth = barWidth + 10,
+      boxHeight = barHeight + 10
+
     // box
-    const box = scene.add.rectangle(0,0, 210, 50, 0xF44336)  
+    const box = scene.add.rectangle(0, 0, 210, 50, 0xF44336)
 
     this.boxTween = scene.tweens.add({
       targets: box,
@@ -32,7 +37,7 @@ export class Fuel {
     const text = scene.add
       .text(0, 0, '燃料補給中…', createFontStyle('0x222222'))
       .setAlpha(0)
-     .setOrigin(0.5)
+      .setOrigin(0.5)
 
     this.textTween = scene.tweens.add({
       targets: text,
@@ -45,8 +50,8 @@ export class Fuel {
     })
 
     scene.add
-    .container(HALF_WIDTH, 40, [box, this.bar, text])
-    .setDepth(3)
+      .container(HALF_WIDTH * 1.25, boxHeight * 0.75, [box, this.bar, text])
+      .setDepth(3)
   }
 
   private get isRemain(): boolean {
@@ -67,8 +72,8 @@ export class Fuel {
 
   private toExhaust() {
     this.isExhaust = true
-    this.textTween.play(true)
-    this.boxTween.play(true)
+    this.textTween.play()
+    this.boxTween.play()
   }
 
   private hitFull() {

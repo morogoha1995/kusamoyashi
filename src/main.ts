@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { WIDTH, HEIGHT } from './constants'
+import { WIDTH, OVERALL_HEIGHT } from './constants'
 import { Boot } from './scenes/boot'
 import { Game } from './scenes/game'
 import { End } from './scenes/end'
@@ -9,7 +9,7 @@ window.onload = () => {
     parent: 'app',
     type: Phaser.AUTO,
     width: WIDTH,
-    height: HEIGHT,
+    height: OVERALL_HEIGHT,
     physics: {
       default: 'arcade',
       arcade: {

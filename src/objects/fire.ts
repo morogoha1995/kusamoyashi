@@ -1,11 +1,14 @@
 import { Fuel } from "./fuel"
 
-export class Fire extends Phaser.GameObjects.Sprite {
+export class Fire extends Phaser.Physics.Arcade.Sprite {
   private fuel: Fuel
+  isAttack = false
 
   constructor(scene: Phaser.Scene) {
     super(scene, 0, 0, 'fire')
     scene.add.existing(this)
+    scene.physics.add.existing(this)
+    this.body.enable = true
 
     this.fuel = new Fuel(scene)
 
@@ -18,12 +21,13 @@ export class Fire extends Phaser.GameObjects.Sprite {
 
     this.play('firing')
       .setVisible(false)
-      .setScale(2)
+      .setScale(2.5)
       .setDepth(2)
   }
 
   update(isClick: boolean, pos: { x: number, y: number }) {
     const isAttack = isClick && this.fuel.canFire
+    this.isAttack = isClick
 
     this.setVisible(isAttack)
 
