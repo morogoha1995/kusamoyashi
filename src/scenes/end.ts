@@ -15,36 +15,33 @@ export class End extends Phaser.Scene {
   }
 
   private showBg() {
-    const bg = this.add.rectangle(0, 0, WIDTH, OVERALL_HEIGHT, 0x222222)
+    const bg = this.add.rectangle(0, 0, WIDTH, OVERALL_HEIGHT, 0xFFFFFF)
       .setAlpha(0)
       .setOrigin(0)
 
     this.add.tween({
       targets: bg,
       duration: 300,
-      alpha: 0.4,
-      onComplete: () => this.showText()
+      alpha: 0.2,
+      onComplete: () => this.showGameover()
     })
   }
 
-  private showText() {
-    const style = createFontStyle('crimson', 2),
-      t = this.add
-        .text(HALF_WIDTH, 0, 'GAME OVER', style)
-        .setOrigin(0.5),
-      textHeight = 120,
-      btnHeight = textHeight + 80
+  private showGameover() {
+    const t = this.add.image(HALF_WIDTH, 0, 'gameover'),
+      textY = 120,
+      btnY = textY + 80
 
     this.add.tween({
       targets: t,
-      y: textHeight,
+      y: textY,
       duration: 1000,
       ease: 'Bounce',
-      onComplete: () => this.showBtns(btnHeight)
+      onComplete: () => this.showBtns(btnY)
     })
   }
 
-  private showBtns(height: number) {
+  private showBtns(y: number) {
     // TODO
   }
 
