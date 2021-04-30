@@ -1,56 +1,40 @@
-import { Tweens } from "phaser"
 import { HALF_WIDTH } from "../constants"
 import { createFontStyle } from "../utils"
 
-export class Fuel {
+export class Fuel extends Phaser.GameObjects.Container {
+  private readonly maxquantity = 200
   private quantity = 200
+  private fullChargeSpeed = 3000
   private isExhaust = false
 
+  private box: Phaser.GameObjects.Rectangle
   private bar: Phaser.GameObjects.Rectangle
-  private boxTween: Phaser.Tweens.Tween
-  private textTween: Phaser.Tweens.Tween
+  private text: Phaser.GameObjects.Text
 
   constructor(scene: Phaser.Scene) {
+    super(scene)
+
     const barWidth = 200,
       barHeight = 30,
       boxWidth = barWidth + 10,
       boxHeight = barHeight + 10
 
-    // box
-    const box = scene.add.rectangle(0, 0, 210, 50, 0xF44336)
+    this.box = scene.add.rectangle(0, 0, boxWidth, boxHeight, 0xF44336)
 
-    this.boxTween = scene.tweens.add({
-      targets: box,
-      angle: 40,
-      duration: 40,
-      yoyo: true,
-      paused: true,
-      onComplete: () => this.boxTween.stop(0)
-    })
-
-    // bar
     this.bar = scene.add
-      .rectangle(-100, 0, 200, 40, 0xFFD740)
+      .rectangle(-100, 0, barWidth, barHeight, 0xFFD740)
       .setOrigin(0, 0.5)
 
-    // text and textTween
-    const text = scene.add
+    this.text = scene.add
       .text(0, 0, '燃料補給中…', createFontStyle('0x222222'))
       .setAlpha(0)
       .setOrigin(0.5)
 
-    this.textTween = scene.tweens.add({
-      targets: text,
-      alpha: 1,
-      duration: 200,
-      yoyo: true,
-      repeat: -1,
-      delay: 200,
-      paused: true,
-    })
+    scene.add.existing(this)
 
-    scene.add
-      .container(HALF_WIDTH * 1.25, boxHeight * 0.75, [box, this.bar, text])
+    this
+      .add([this.box, this.bar, this.text])
+      .setPosition(HALF_WIDTH * 1.25, boxHeight * 0.75)
       .setDepth(3)
   }
 
@@ -59,7 +43,7 @@ export class Fuel {
   }
 
   private get isMax(): boolean {
-    return this.quantity >= 200
+    return this.quantity >= this.maxquantity
   }
 
   update(isAttack: boolean) {
@@ -72,23 +56,39 @@ export class Fuel {
 
   private toExhaust() {
     this.isExhaust = true
-    this.textTween.play()
-    this.boxTween.play()
+    this.tweenBox()
+    this.tweenText()
+    this.fullChargeSpeed += 3000
   }
 
-  private hitFull() {
-    if (!this.isExhaust)
-      return
+  private tweenBox() {
+    this.scene.tweens.add({
+      targets: this,
+      angle: 10,
+      duration: this.fullChargeSpeed,
+      yoyo: true,
+      ease: 'Elastic',
+    })
+  }
 
-    this.isExhaust = false
-    this.textTween.stop(0)
+  private tweenText() {
+    this.scene.tweens.add({
+      targets: this.text,
+      alpha: 1,
+      duration: this.fullChargeSpeed / 10,
+      yoyo: true,
+      repeat: 5,
+      onRepeat: () => {
+        this.quantity += this.maxquantity / 5
+        this.changeBarSize()
+      },
+      onComplete: () => this.isExhaust = false
+    })
   }
 
   private charge() {
-    if (this.isMax) {
-      this.hitFull()
+    if (this.isMax || this.isExhaust)
       return
-    }
 
     this.quantity++
     this.changeBarSize()
@@ -103,6 +103,6 @@ export class Fuel {
   }
 
   private changeBarSize() {
-    this.bar.setDisplaySize(this.quantity, 40)
+    this.bar.setDisplaySize(this.quantity, this.bar.height)
   }
 }
