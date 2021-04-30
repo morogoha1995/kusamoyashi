@@ -1,5 +1,5 @@
-import { HALF_WIDTH, HEIGHT, OVERALL_HEIGHT, WIDTH } from '../constants'
-import { createFontStyle, createTweet } from '../utils'
+import { HALF_WIDTH, OVERALL_HEIGHT, TITLE_Y, WIDTH } from '../constants'
+import { createTweet } from '../utils'
 
 export class End extends Phaser.Scene {
   private wave = 0
@@ -7,8 +7,6 @@ export class End extends Phaser.Scene {
   constructor() {
     super({ key: 'end' })
   }
-
-  init() { }
 
   create() {
     this.showBg()
@@ -28,31 +26,35 @@ export class End extends Phaser.Scene {
   }
 
   private showGameover() {
-    const t = this.add.image(HALF_WIDTH, 0, 'gameover'),
-      textY = 120,
-      btnY = textY * 2
+    const t = this.add.image(HALF_WIDTH, 0, 'gameover')
 
     this.add.tween({
       targets: t,
-      y: textY,
+      y: TITLE_Y,
       duration: 600,
       ease: 'Bounce',
-      onComplete: () => this.showBtns(btnY)
+      onComplete: () => this.showBtns()
     })
   }
 
-  private showBtns(y: number) {
-    const leftX = HALF_WIDTH / 2,
-      rightX = HALF_WIDTH + leftX,
+  private showBtns() {
+    const y = TITLE_Y * 2,
       restartBtn = this.add.image(0, y, 'restart'),
       tweetBtn = this.add.image(WIDTH, y, 'tweet'),
+      leftX = HALF_WIDTH / 2,
+      rightX = HALF_WIDTH + leftX,
       duration = 1000
 
     this.add.tween({
       targets: restartBtn,
       x: leftX,
       duration: duration,
-      ease: 'Elastic'
+      ease: 'Elastic',
+      onComplete: () => {
+        restartBtn
+          .setInteractive()
+          .on('pointerdown', () => this.restart())
+      }
     })
 
     this.add.tween({
@@ -61,6 +63,10 @@ export class End extends Phaser.Scene {
       duration: duration,
       ease: 'Elastic'
     })
+  }
+
+  private restart() {
+    console.log('TODO')
   }
 
   private tweet() {

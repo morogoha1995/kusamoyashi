@@ -11,7 +11,7 @@ export class Boot extends Phaser.Scene {
       .image('bg', `${dir}bg.jpg`)
       .image('grass', `${dir}grass.png`)
       .image('title', `${td}title.png`)
-      .image('start', `${td}start.png`)
+      .image('start', `${td}startBtn.png`)
       .image('gameover', `${td}gameover.png`)
       .image('restart', `${td}restartBtn.png`)
       .image('tweet', `${td}tweetBtn.png`)
