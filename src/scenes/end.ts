@@ -30,19 +30,37 @@ export class End extends Phaser.Scene {
   private showGameover() {
     const t = this.add.image(HALF_WIDTH, 0, 'gameover'),
       textY = 120,
-      btnY = textY + 80
+      btnY = textY * 2
 
     this.add.tween({
       targets: t,
       y: textY,
-      duration: 1000,
+      duration: 600,
       ease: 'Bounce',
       onComplete: () => this.showBtns(btnY)
     })
   }
 
   private showBtns(y: number) {
-    // TODO
+    const leftX = HALF_WIDTH / 2,
+      rightX = HALF_WIDTH + leftX,
+      restartBtn = this.add.image(0, y, 'restart'),
+      tweetBtn = this.add.image(WIDTH, y, 'tweet'),
+      duration = 1000
+
+    this.add.tween({
+      targets: restartBtn,
+      x: leftX,
+      duration: duration,
+      ease: 'Elastic'
+    })
+
+    this.add.tween({
+      targets: tweetBtn,
+      x: rightX,
+      duration: duration,
+      ease: 'Elastic'
+    })
   }
 
   private tweet() {
