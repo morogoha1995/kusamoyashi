@@ -12,16 +12,20 @@ export class Grass extends Phaser.GameObjects.Sprite {
       .setDepth(1)
   }
 
-  attacked() {
+  attacked(): boolean {
     if (this.isDying)
-      return
+      return false
 
     this.hp--
 
-    if (this.hp === 0)
+    const isDie = this.hp === 0
+
+    if (isDie)
       this.die()
     else
       this.hit()
+
+    return isDie
   }
 
   private hit() {
