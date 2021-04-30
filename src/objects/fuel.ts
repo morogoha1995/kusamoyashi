@@ -4,7 +4,7 @@ import { createFontStyle } from "../utils"
 export class Fuel extends Phaser.GameObjects.Container {
   private readonly maxquantity = 200
   private quantity = 200
-  private fullChargeSpeed = 3000
+  private fullChargeSpeed = 1500
   private isExhaust = false
 
   private box: Phaser.GameObjects.Rectangle
@@ -58,7 +58,7 @@ export class Fuel extends Phaser.GameObjects.Container {
     this.isExhaust = true
     this.tweenBox()
     this.tweenText()
-    this.fullChargeSpeed += 3000
+    this.fullChargeSpeed += 500
   }
 
   private tweenBox() {
@@ -72,14 +72,16 @@ export class Fuel extends Phaser.GameObjects.Container {
   }
 
   private tweenText() {
+    const repeatNum = 5
+
     this.scene.tweens.add({
       targets: this.text,
       alpha: 1,
-      duration: this.fullChargeSpeed / 10,
+      duration: this.fullChargeSpeed / repeatNum,
       yoyo: true,
-      repeat: 5,
+      repeat: repeatNum,
       onRepeat: () => {
-        this.quantity += this.maxquantity / 5
+        this.quantity += this.maxquantity / repeatNum
         this.changeBarSize()
       },
       onComplete: () => this.isExhaust = false
