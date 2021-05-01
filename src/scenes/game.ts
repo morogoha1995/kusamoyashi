@@ -6,8 +6,7 @@ export class Game extends Phaser.Scene {
   private grasses!: Phaser.Physics.Arcade.Group
   private fire!: Fire
 
-  private createInterval = 500
-  private addInterval = 2000
+  private eventDelay = 2000
   private grassCount = 0
 
   constructor() {
@@ -29,17 +28,16 @@ export class Game extends Phaser.Scene {
         if (g.attacked())
           this.grassCount--
     })
+
+    this.setTimerEvent()
   }
 
-  update(time: number) {
+  update() {
     if (this.grassCount >= 5)
       this.gameover()
 
     const isClick = this.input.activePointer.isDown
     this.fire.update(isClick, this.getPointerPos())
-
-    if (this.createInterval <= time)
-      this.createGrass()
   }
 
   private createGrass() {
@@ -49,13 +47,20 @@ export class Game extends Phaser.Scene {
 
     this.grasses.add(grass, true)
     this.grassCount++
-    this.calcInterval()
+    this.setNextTimerEvent()
   }
 
-  private calcInterval() {
-    this.createInterval += this.addInterval
-    if (this.addInterval > 1000)
-      this.addInterval -= 50
+  private setNextTimerEvent() {
+    const d = this.eventDelay
+    this.eventDelay = d > 1000 ? d - 50 : d
+    this.setTimerEvent()
+  }
+
+  private setTimerEvent() {
+    this.time.addEvent({
+      delay: this.eventDelay,
+      callback: () => this.createGrass()
+    })
   }
 
   private getPointerPos() {
