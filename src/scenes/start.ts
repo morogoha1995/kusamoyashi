@@ -1,4 +1,4 @@
-import { BTN_Y, HALF_WIDTH, TITLE_Y } from "../constants"
+import { BTN_Y, HALF_WIDTH, OVERALL_HEIGHT, TITLE_Y, WIDTH } from "../constants"
 
 export class Start extends Phaser.Scene {
   private canStart = false
@@ -21,7 +21,7 @@ export class Start extends Phaser.Scene {
 
   update() {
     if (this.input.activePointer.isDown && this.canStart)
-      this.scene.start('game')
+      this.toGameScene()
   }
 
   private createStartBtn() {
@@ -35,6 +35,23 @@ export class Start extends Phaser.Scene {
       yoyo: true,
       alpha: 0.4,
       repeat: -1,
+    })
+  }
+
+  private toGameScene() {
+    this.canStart = false
+
+    const bg = this.add
+      .image(0, OVERALL_HEIGHT, 'bg')
+      .setScale(1.5)
+      .setOrigin(0)
+
+    this.add.tween({
+      targets: bg,
+      y: 0,
+      duration: 1000,
+      ease: 'Cubic',
+      onComplete: () => this.scene.start('game')
     })
   }
 }
