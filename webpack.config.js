@@ -27,8 +27,8 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, './kusamoyashi-assets'),
-          to: path.resolve(__dirname, 'dist/kusamoyashi-assets')
+          from: path.resolve(__dirname, 'assets'),
+          to: path.resolve(__dirname, 'dist/assets')
         }
       ]
     })
