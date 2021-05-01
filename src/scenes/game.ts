@@ -6,11 +6,20 @@ export class Game extends Phaser.Scene {
   private grasses!: Phaser.Physics.Arcade.Group
   private fire!: Fire
 
-  private eventDelay = 2000
-  private grassCount = 0
+  private eventDelay!: number
+  private grassCount!: number
 
   constructor() {
     super({ key: 'game' })
+  }
+
+  init() {
+    this.initProperties()
+  }
+
+  private initProperties() {
+    this.eventDelay = 2000
+    this.grassCount = 0
   }
 
   create() {

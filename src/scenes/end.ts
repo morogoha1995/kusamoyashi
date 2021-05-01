@@ -1,11 +1,20 @@
 import { BTN_Y, HALF_WIDTH, OVERALL_HEIGHT, TITLE_Y, WIDTH } from '../constants'
-import { createTweet } from '../utils'
+import { createTweet, startTween } from '../utils'
 
 export class End extends Phaser.Scene {
   private wave = 0
+  private canRestart = true
 
   constructor() {
     super({ key: 'end' })
+  }
+
+  init() {
+    this.initProperties()
+  }
+
+  private initProperties() {
+    this.canRestart = true
   }
 
   create() {
@@ -63,19 +72,28 @@ export class End extends Phaser.Scene {
       targets: tweetBtn,
       x: rightX,
       duration: duration,
-      ease: 'Elastic'
+      ease: 'Elastic',
+      onComplete: () => {
+        tweetBtn
+          .setInteractive()
+          .on('pointerdown', () => this.tweet())
+      }
     })
   }
 
   private restart() {
-    console.log('TODO')
+    if (!this.canRestart)
+      return
+
+    this.canRestart = false
+
+    startTween(this)
   }
 
   private tweet() {
-    const url = 'https://meisoudev.com/games/gamahebi/'
-    const text = `第${this.wave}波にて陥落…。`
-
-    const tweetURL = createTweet(text, url, '草燃やし')
+    const url = 'https://noneed.work/games/kusamoyashi',
+      text = '草燃やしで草を燃やしましょう。',
+      tweetURL = createTweet(text, url, '草燃やし')
 
     window.open(tweetURL, 'blank')
   }
