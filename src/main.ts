@@ -3,6 +3,7 @@ import { WIDTH, OVERALL_HEIGHT } from './constants'
 import { Boot } from './scenes/boot'
 import { Game } from './scenes/game'
 import { End } from './scenes/end'
+import { Start } from './scenes/start'
 
 window.onload = () => {
   new Phaser.Game({
@@ -19,6 +20,7 @@ window.onload = () => {
     backgroundColor: '#fdf6e3',
     scene: [
       Boot,
+      Start,
       Game,
       End
     ]

@@ -1,4 +1,4 @@
-import { HALF_WIDTH, OVERALL_HEIGHT, TITLE_Y, WIDTH } from '../constants'
+import { BTN_Y, HALF_WIDTH, OVERALL_HEIGHT, TITLE_Y, WIDTH } from '../constants'
 import { createTweet } from '../utils'
 
 export class End extends Phaser.Scene {
@@ -26,21 +26,23 @@ export class End extends Phaser.Scene {
   }
 
   private showGameover() {
-    const t = this.add.image(HALF_WIDTH, 0, 'gameover')
+    const t = this.add.image(HALF_WIDTH, BTN_Y, 'gameover')
+
+    t.setScale(0.2)
 
     this.add.tween({
       targets: t,
       y: TITLE_Y,
-      duration: 600,
+      scale: 1,
+      duration: 1000,
       ease: 'Bounce',
       onComplete: () => this.showBtns()
     })
   }
 
   private showBtns() {
-    const y = TITLE_Y * 2,
-      restartBtn = this.add.image(0, y, 'restart'),
-      tweetBtn = this.add.image(WIDTH, y, 'tweet'),
+    const restartBtn = this.add.image(0, BTN_Y, 'restart'),
+      tweetBtn = this.add.image(WIDTH, BTN_Y, 'tweet'),
       leftX = HALF_WIDTH / 2,
       rightX = HALF_WIDTH + leftX,
       duration = 1000

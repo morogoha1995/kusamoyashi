@@ -1,7 +1,6 @@
-import { HALF_WIDTH, HEIGHT, OVERALL_HEIGHT, SCORE_HEIGHT, WIDTH } from "../constants"
+import { OVERALL_HEIGHT, SCORE_HEIGHT, WIDTH } from "../constants"
 import { Fire } from "../objects/fire"
 import { Grass } from "../objects/grass"
-import { createFontStyle } from "../utils"
 
 export class Game extends Phaser.Scene {
   private grasses!: Phaser.Physics.Arcade.Group

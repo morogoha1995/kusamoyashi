@@ -4,6 +4,7 @@ export const WIDTH = 320,
   SCORE_HEIGHT = 40,
   OVERALL_HEIGHT = HEIGHT + SCORE_HEIGHT,
   TITLE_Y = 120,
+  BTN_Y = TITLE_Y * 2,
   FONT_SIZE = 24
 
 
