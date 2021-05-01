@@ -4,7 +4,7 @@ export class Boot extends Phaser.Scene {
   }
 
   preload() {
-    const dir = 'assets/imgs/'
+    const dir = 'kusamoyashi-assets/imgs/'
     const td = `${dir}text/`
 
     this.load
