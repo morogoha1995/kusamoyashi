@@ -34,7 +34,7 @@ export class Fuel extends Phaser.GameObjects.Container {
 
     this
       .add([this.box, this.bar, this.text])
-      .setPosition(HALF_WIDTH * 1.25, boxHeight * 0.75)
+      .setPosition(HALF_WIDTH, boxHeight * 0.75)
       .setDepth(3)
   }
 
