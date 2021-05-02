@@ -91,7 +91,7 @@ export class End extends Phaser.Scene {
   }
 
   private tweet() {
-    const url = 'https://noneed.work/games/kusamoyashi',
+    const url = 'https://noneed.work/kusamoyashi',
       text = '草燃やしで草を燃やしましょう。',
       tweetURL = createTweet(text, url, '草燃やし')
 
